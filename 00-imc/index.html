@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora IMC</title>
+    <style>
+         @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root{
+            --g1: #7a706c;
+            --orange: #ff6a2a;
+            --g2: #bbc1c2;
+            --g3: #d8d8d8;
+            --g4: #f0f3f2;
+        }
+
+        body{
+            font-family: 'Poppins', sans-serif;
+            width: 100vw;
+            height: 100vh;
+            background: var(--g2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container{
+            width: 50%;
+            height: 90%;
+            background: var(--orange);
+            border-radius: 15px;
+            
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+        }
+        .title{
+            width: 100%;
+            text-align: center;
+        }
+        .line{
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: #200;
+        }
+        .inputs{
+            width: 80%;
+            height: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .inputs .input{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+        .input input{
+            width: 70%;
+            border: none;
+            background: var(--g4);
+            padding: 5px;
+            border-radius: 7px;
+        }
+        .input input:focus{
+            outline: none;
+        }
+        .input label{
+           font-weight: 700;
+        }
+        .inputs button{
+            border: none;
+            color: #220000;
+            font-weight: 700;
+            background-color: var(--g3);
+            width: 100%;
+            height: 10%;
+            border-radius: 8px;
+            box-shadow: 0 1px var(--g2);
+            cursor: pointer;
+        }
+        .inputs button:hover{
+            background-color: var(--g2);
+            box-shadow:0 1px var(--g1) ;
+        }
+        .output{
+            width: 80%;
+            height: 25%;
+            background-color: var(--g1);
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            padding: 15px;
+            color: #d8d8d8;
+            
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            font-size: 1rem;
+            font-weight: 700;
+
+            align-items: left;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <h2>Calculadora IMC</h2>
+            <span class="line"></span>
+        </div>
+        <div class="inputs">
+        <div class="input name">
+            <label for="nome">Nome: </label>
+            <input type="text" name="nome" class="nome">
+        </div>
+        <div class="input height">
+            <label for="altura">Altura: </label>
+            <input type="number" name="altura" class="altura">
+        </div>
+
+        <div class="input weight">
+            <label for="peso">Peso: </label>
+            <input type="number" name="peso" class="peso">
+        </div>
+            <button class="submit">Enviar</button>
+        </div>
+        <div class="output">
+          
+        </div>
+    </div>
+
+    <script>
+        var saida = document.querySelector('.output')
+        //botao
+        var button = document.querySelector('.submit')
+        //inputs
+        const inputElementName = document.querySelector('.nome')
+        const inputElementHeight = document.querySelector('.altura')
+        const inputElementWeight = document.querySelector('.peso')
+        
+        const newDiv = document.createElement('p')
+        newDiv.classList.add('text')
+
+        const newPar = document.createElement('p')
+        newPar.classList.add('text')
+    
+        saida.appendChild(newDiv)
+        saida.appendChild(newPar)
+
+        const validateName = () => inputElementName.value.trim().length > 0
+        const validateHeight = () => inputElementHeight.value.trim().lenght > 0
+        const validateWeight = () => inputElementWeight.value.trim().lenght > 0
+        button.addEventListener("click", () => {
+            var altura = inputElementHeight.value
+            var peso = inputElementWeight.value
+            if(validateName()){
+                if(validateHeight() && validateWeight()){
+
+                    var imc = peso / altura**2
+
+                    newDiv.innerHTML = `Olá ${inputElementName.value}, seu IMC é de ${imc.toFixed(2)}`
+                    
+                    newPar.innerHTML = calculo(imc)
+                    inputElementName.value = ''
+                    inputElementHeight.value = ''
+                    inputElementWeight.value = ''  
+                } else{
+                    newDiv.innerHTML = 'Altura ou peso inválidos, verifique as informações.'
+                }
+            }else{
+             newDiv.innerHTML = "Informe seu nome."
+            }
+        }
+        
+        )
+
+        const calculo = (num) => {
+            var mensagem = ''
+
+            if(num < 18.5){
+                mensagem = 'Você está abaixo do peso'
+                console.log(num)
+            }
+             else if(num >= 18.5 && num < 24.9){
+                mensagem = 'Seu peso está normal'
+                console.log(num)
+            } 
+            else if(num >= 24.9 && num < 30){
+                mensagem = 'Você está acima do peso'
+                console.log(num)
+            } 
+            else if(num >= 30 && num < 40){
+                mensagem = 'Você está em caso de obesidade'
+                console.log(num)
+            } 
+            else if(num >= 40){
+                mensagem = 'Você está em caso de obesidade grave'
+                console.log(num)
+            }
+
+            return mensagem
+
+        
+        }
+    </script>
+</body>
+</html>
